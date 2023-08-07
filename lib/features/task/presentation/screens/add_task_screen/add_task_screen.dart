@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_app/core/utils/app_colors.dart';
 import 'package:to_do_app/core/utils/app_strings.dart';
+import 'package:to_do_app/core/widgets/custom_eleveted_button.dart';
 
 import '../../components/add_task_components.dart';
 
@@ -21,6 +22,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   String startTime = DateFormat('hh:mm a').format(DateTime.now());
   String endTime = DateFormat('hh:mm a')
       .format(DateTime.now().add(const Duration(minutes: 45)));
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -154,24 +156,72 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   height: 26,
                 ),
                 //! colors
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      AppStrings.color,
-                      style: Theme.of(context).textTheme.displayMedium,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    const Row(
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: AppColors.red,
-                        ),
-                      ],
-                    )
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppStrings.color,
+                        style: Theme.of(context).textTheme.displayMedium,
+                      ),
+                      // const SizedBox(
+                      //   height: 8,
+                      // ),
+                      Expanded(
+                          child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 6,
+                        itemBuilder: (context, index) {
+                          Color getColor(index) {
+                            switch (index) {
+                              case 0:
+                                return AppColors.red;
+                              case 1:
+                                return AppColors.green;
+                              case 2:
+                                return AppColors.blueGrye;
+                              case 3:
+                                return AppColors.blue;
+                              case 4:
+                                return AppColors.orange;
+                              case 5:
+                                return AppColors.purple;
+                              default:
+                                return AppColors.grey;
+                            }
+                          }
+
+                          return Row(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    currentIndex=index;
+                                  });
+                                },
+                                child: CircleAvatar(
+                                  backgroundColor: getColor(index),
+                                  child:index==currentIndex?const Icon(Icons.check):null,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 8,
+                              )
+                            ],
+                          );
+                        },
+                      ))
+                    ],
+                  ),
+                ),
+
+                //! add task button
+                const Spacer(),
+                SizedBox(
+                  height: 48,
+                  width: double.infinity,
+                  child: CustomElevetedButton(
+                      text: AppStrings.createTask, onPressed: () {}),
                 )
               ],
             ),
