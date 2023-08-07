@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:to_do_app/core/utils/app_assets.dart';
-import 'package:to_do_app/core/utils/app_colors.dart';
+import 'package:to_do_app/core/theme/theme.dart';
 import 'package:to_do_app/core/utils/app_strings.dart';
+
+import '../features/task/presentation/screens/splash_screen/splash_screen.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -9,16 +10,12 @@ class MyApp extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return  MaterialApp(
       title: AppStrings.appName,
+      theme: getAppTheme(),
       debugShowCheckedModeBanner: false,
       
-      home: Scaffold(
-        backgroundColor: AppColors.background,
-        body: Center(
-          child:Image.asset(AppAssets.logo),
-        ),
-      ),
+      home: const SplashScreen()
     );
   }
 }

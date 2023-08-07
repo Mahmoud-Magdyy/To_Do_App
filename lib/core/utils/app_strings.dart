@@ -10,7 +10,7 @@ class AppStrings{
   static const String onBoardingSubTitleTwo='In Uptodo  you can create your personalized routine to stay productive';
   static const String onBoardingTitleThree='Organaize your tasks';
   static const String onBoardingSubTitleThree='You can organize your daily tasks by adding your tasks into separate categories';
-    static const String toDay='ToDay';
+    static const String toDay='Today';
     static const String noTaskTitle='What do you want to do today?';
     static const String noTaskSubTitle='Tap + to add your tasks';
     static const String addTask='Add Task';
@@ -27,4 +27,6 @@ class AppStrings{
     static const String taskCompleted ='Task Completed ';
     static const String deleteTask='Delete Task';
     static const String cancel='Cancel';
+    static const String onBoardingKey='onBoarding';
+    static const String color='Color';
 }
