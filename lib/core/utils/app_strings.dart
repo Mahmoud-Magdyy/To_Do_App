@@ -24,7 +24,7 @@ class AppStrings{
     static const String createTask='CREATE TASK';
     static const String toDo='TODO';
     static const String completed='COMPLETED';
-    static const String taskCompleted ='Task Completed ';
+    static const String taskCompleted =' Completed ';
     static const String deleteTask='Delete Task';
     static const String cancel='Cancel';
     static const String onBoardingKey='onBoarding';

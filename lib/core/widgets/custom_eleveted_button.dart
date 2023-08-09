@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../utils/app_colors.dart';
@@ -24,7 +25,7 @@ class CustomElevetedButton extends StatelessWidget {
           style: GoogleFonts.lato(
             color: AppColors.white,
             fontWeight: FontWeight.w400,
-            fontSize: 16,
+            fontSize: 16.sp,
           ),
         ));
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 class AddTaskComponent extends StatelessWidget {
@@ -15,7 +16,7 @@ class AddTaskComponent extends StatelessWidget {
       children: [
         
         Text(title,style: Theme.of(context).textTheme.displayMedium,),
-              const SizedBox(height: 8,),
+               SizedBox(height: 8.h,),
               TextFormField(
                 readOnly: readOnly,
                 controller: controller,

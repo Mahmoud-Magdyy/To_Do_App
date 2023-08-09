@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:to_do_app/core/database/cache/cache_helper.dart';
 import 'package:to_do_app/core/services/service_locator.dart';
@@ -19,7 +20,7 @@ class OnBoaringScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.all(24),
+          padding:  const EdgeInsets.all(24),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -39,30 +40,30 @@ class OnBoaringScreen extends StatelessWidget {
                                 },
                               )
                             
-                            : const SizedBox(
-                                height: 54,
+                            :  SizedBox(
+                                height: 54.h,
                               ),
-                        const SizedBox(
-                          height: 15,
+                         SizedBox(
+                          height: 15.h,
                         ),
                         //image
                         Image.asset(
                             OnBoaringModel.OnBoaringScreens[index].imagePath),
-                        const SizedBox(
-                          height: 16,
+                         SizedBox(
+                          height: 16.h,
                         ),
                         //dotts
                         SmoothPageIndicator(
                           controller: controller,
                           count: 3,
-                          effect: const ExpandingDotsEffect(
+                          effect:  const ExpandingDotsEffect(
                               activeDotColor: AppColors.primary,
                               dotHeight: 10,
                               spacing: 8),
                         ),
 
-                        const SizedBox(
-                          height: 50,
+                         SizedBox(
+                          height: 50.h,
                         ),
                         //title
 
@@ -70,8 +71,8 @@ class OnBoaringScreen extends StatelessWidget {
                           OnBoaringModel.OnBoaringScreens[index].title,
                           style: Theme.of(context).textTheme.displayLarge,
                         ),
-                        const SizedBox(
-                          height: 42,
+                         SizedBox(
+                          height: 42.h,
                         ),
                         //subtitle
 
@@ -80,8 +81,8 @@ class OnBoaringScreen extends StatelessWidget {
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.displayMedium,
                         ),
-                        const SizedBox(
-                          height: 100,
+                        SizedBox(
+                          height: 100.h,
                         ),
                         //buttons
                         Row(
@@ -94,7 +95,7 @@ class OnBoaringScreen extends StatelessWidget {
                                     onPressed: () {
                                       controller.previousPage(
                                           duration:
-                                              const Duration(milliseconds: 500),
+                                               const Duration(milliseconds: 500),
                                           curve:
                                               Curves.fastEaseInToSlowEaseOut);
                                     })
@@ -105,7 +106,7 @@ class OnBoaringScreen extends StatelessWidget {
                                 CustomElevetedButton(text: AppStrings.next, onPressed: () {
                                       controller.nextPage(
                                           duration:
-                                              const Duration(milliseconds: 500),
+                                               const Duration(milliseconds: 500),
                                           curve:
                                               Curves.fastEaseInToSlowEaseOut);
                                     })
@@ -122,7 +123,7 @@ class OnBoaringScreen extends StatelessWidget {
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (_) =>
-                                                            const HomeScreen()))
+                                                             const HomeScreen()))
                                               });
                                     },)
                                 
