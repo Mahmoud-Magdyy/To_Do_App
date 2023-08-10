@@ -11,10 +11,7 @@ import 'package:to_do_app/features/task/presentation/cubit/task_state.dart';
 import '../../components/add_task_components.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  AddTaskScreen({super.key});
-  TextEditingController titleController = TextEditingController();
-
-  TextEditingController noteController = TextEditingController();
+  const AddTaskScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,25 +33,48 @@ class AddTaskScreen extends StatelessWidget {
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(24),
-            child: Form(
-              child: BlocBuilder<TaskCubit, TaskState>(
-                builder: (context, state) {
-                  return Column(
+            child: BlocConsumer<TaskCubit, TaskState>(
+              listener: (context, state) {
+                if (state is InsertTaskSuccessState) {
+                  Navigator.pop(context);
+                }
+              },
+              builder: (context, state) {
+                return Form(
+                  key: BlocProvider.of<TaskCubit>(context).formKey,
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       //! title
                       AddTaskComponent(
-                          title: AppStrings.title,
-                          hintText: AppStrings.titleHint,
-                          controller: titleController),
+                        title: AppStrings.title,
+                        hintText: AppStrings.titleHint,
+                        controller:
+                            BlocProvider.of<TaskCubit>(context).titleController,
+                        validator: (val) {
+                          if (val!.isEmpty) {
+                            return AppStrings.titleErrorMs;
+                          }
+                          return null;
+                        },
+                      ),
+
                       SizedBox(
                         height: 24.h,
                       ),
                       //! note
                       AddTaskComponent(
-                          title: AppStrings.note,
-                          hintText: AppStrings.noteHint,
-                          controller: noteController),
+                        title: AppStrings.note,
+                        hintText: AppStrings.noteHint,
+                        controller:
+                            BlocProvider.of<TaskCubit>(context).noteController,
+                        validator: (val) {
+                          if (val!.isEmpty) {
+                            return AppStrings.noteErrorMs;
+                          }
+                          return null;
+                        },
+                      ),
                       SizedBox(
                         height: 24.h,
                       ),
@@ -175,16 +195,30 @@ class AddTaskScreen extends StatelessWidget {
                       ),
                       //! add task button
                       //  Spacer(),
-                      SizedBox(
-                        height: 48.h,
-                        width: double.infinity,
-                        child: CustomElevetedButton(
-                            text: AppStrings.createTask, onPressed: () {}),
-                      )
+                      state is InsertTaskLoadingState
+                          ? const Center(
+                              child: CircularProgressIndicator(
+                              color: AppColors.primary,
+                            ),)
+                          : SizedBox(
+                              height: 48.h,
+                              width: double.infinity,
+                              child: CustomElevetedButton(
+                                  text: AppStrings.createTask,
+                                  onPressed: () {
+                                    if (BlocProvider.of<TaskCubit>(context)
+                                        .formKey
+                                        .currentState!
+                                        .validate()) {
+                                      BlocProvider.of<TaskCubit>(context)
+                                          .insetTask();
+                                    }
+                                  }),
+                            )
                     ],
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
           ),
         ));
