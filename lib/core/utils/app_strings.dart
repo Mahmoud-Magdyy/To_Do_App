@@ -29,4 +29,6 @@ class AppStrings{
     static const String cancel='Cancel';
     static const String onBoardingKey='onBoarding';
     static const String color='Color';
+    static const String noteErrorMs='Enter valid note';
+    static const String titleErrorMs='Enter valid title';
 }

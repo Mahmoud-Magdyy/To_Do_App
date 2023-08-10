@@ -3,12 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 class AddTaskComponent extends StatelessWidget {
-  const AddTaskComponent({super.key, required this.title, required this.hintText,  this.controller, this.suffixIcon,this.readOnly=false});
+  const AddTaskComponent({super.key, required this.title, required this.hintText,  this.controller, this.suffixIcon,this.readOnly=false, this.validator});
   final String title;
   final String hintText;
   final TextEditingController? controller;
   final IconButton? suffixIcon;
   final bool  readOnly ;
+  final String? Function(String?)? validator;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -20,6 +22,7 @@ class AddTaskComponent extends StatelessWidget {
               TextFormField(
                 readOnly: readOnly,
                 controller: controller,
+                validator: validator,
                 decoration:   InputDecoration(
                   
                   //hint

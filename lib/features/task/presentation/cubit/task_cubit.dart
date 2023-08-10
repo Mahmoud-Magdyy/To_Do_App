@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:to_do_app/features/task/presentation/cubit/task_state.dart';
 
 import '../../../../core/utils/app_colors.dart';
+import '../../data/mode/task_model.dart';
 
 class TaskCubit extends Cubit<TaskState> {
   TaskCubit() : super(TaskInitial());
@@ -13,6 +14,11 @@ class TaskCubit extends Cubit<TaskState> {
   String endTime = DateFormat('hh:mm a')
       .format(DateTime.now().add(const Duration(minutes: 45)));
   int currentIndex = 0;
+  TextEditingController titleController = TextEditingController();
+
+  TextEditingController noteController = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   void GetDate(context) async {
     emit(GetDateLoading());
     DateTime? pickedDate = await showDatePicker(
@@ -84,7 +90,33 @@ class TaskCubit extends Cubit<TaskState> {
 
   void changeCheckMarkIndex(index) {
     emit(ChangeCheckMarkIndexState());
-      currentIndex = index;
+    currentIndex = index;
+  }
+
+  List<TaskModel> tasksList = [
     
+  ];
+
+  void insetTask() async{
+    emit(InsertTaskLoadingState());
+    try {
+     await Future.delayed(const Duration(seconds: 3));
+      tasksList.add(
+        TaskModel(
+            id: '1',
+            date: DateFormat.yMd().format(currentDate),
+            color:  currentIndex ,
+            title: titleController.text,
+            note: noteController.text,
+            startTime: startTime,
+            endTime: endTime,
+            isCompleted: false),
+      );
+      titleController.clear();
+      noteController.clear();
+      emit(InsertTaskSuccessState());
+    } catch (e) {
+      emit(InsertTaskErrorState());
+    }
   }
 }
