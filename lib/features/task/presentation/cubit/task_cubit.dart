@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:to_do_app/core/database/sqflite_helper/sqflite.dart';
 import 'package:to_do_app/features/task/presentation/cubit/task_state.dart';
 
+import '../../../../core/services/service_locator.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../data/mode/task_model.dart';
 
@@ -93,30 +95,68 @@ class TaskCubit extends Cubit<TaskState> {
     currentIndex = index;
   }
 
-  List<TaskModel> tasksList = [
-    
-  ];
+  List<TaskModel> tasksList = [];
 
-  void insetTask() async{
+  void insetTask() async {
     emit(InsertTaskLoadingState());
+
     try {
-     await Future.delayed(const Duration(seconds: 3));
-      tasksList.add(
+      await   serviceLocatir<SqfliteHelper>().inserrToDB(
         TaskModel(
-            id: '1',
+            
             date: DateFormat.yMd().format(currentDate),
-            color:  currentIndex ,
+            color: currentIndex,
             title: titleController.text,
             note: noteController.text,
             startTime: startTime,
             endTime: endTime,
-            isCompleted: false),
+            isCompleted: 0),
       );
+      getTasks();
+
+      //!insert
+
+      //  await Future.delayed(const Duration(seconds: 3));
+      //   tasksList.add(
+      //     TaskModel(
+      //         id: '1',
+      //         date: DateFormat.yMd().format(currentDate),
+      //         color:  currentIndex ,
+      //         title: titleController.text,
+      //         note: noteController.text,
+      //         startTime: startTime,
+      //         endTime: endTime,
+      //         isCompleted: false),
+      //   );
       titleController.clear();
       noteController.clear();
       emit(InsertTaskSuccessState());
     } catch (e) {
       emit(InsertTaskErrorState());
     }
+  }
+
+//! get task
+  void getTasks()async{
+    emit(GetTaskLoadingState());
+   await serviceLocatir<SqfliteHelper>().getFromDB().then((value){
+    tasksList=value.map((e) => TaskModel.fromJson(e)).toList();
+    emit(GetTaskSuccessState());
+   }).catchError((e){
+    print(e.toString());
+    emit(GetTaskErrorState());
+   });
+  }
+
+//! update
+  void updateTask(id)async{
+    emit(UpdateTaskLoadingState());
+    await serviceLocatir<SqfliteHelper>().updateDB(id).then((value)  {
+      emit(UpdateTaskSuccessState());
+      getTasks();
+    }).catchError((e){
+      print(e.toString());
+      emit(UpdateTaskErrorState());
+    });
   }
 }

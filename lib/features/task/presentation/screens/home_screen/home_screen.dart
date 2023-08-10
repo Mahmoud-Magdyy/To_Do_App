@@ -80,13 +80,25 @@ class HomeScreen extends StatelessWidget {
                                               child: Column(
                                                 children: [
                                                   //taskCompleted
-                                                  SizedBox(
+                                                BlocProvider.of<TaskCubit>(context)
+                                              .tasksList[i].isCompleted==1?Container():  SizedBox(
                                                     height: 48,
                                                     width: double.infinity,
                                                     child: CustomElevetedButton(
                                                         text: AppStrings
                                                             .completed,
-                                                        onPressed: () {}),
+                                                        onPressed: () {
+                                                          BlocProvider.of<
+                                                                      TaskCubit>(
+                                                                  context)
+                                                              .updateTask(BlocProvider
+                                                                      .of<TaskCubit>(
+                                                                          context)
+                                                                  .tasksList[i]
+                                                                  .id);
+                                                                  Navigator.pop(
+                                                              context);
+                                                        }),
                                                   ),
                                                   const SizedBox(
                                                     height: 24,
@@ -111,7 +123,10 @@ class HomeScreen extends StatelessWidget {
                                                     width: double.infinity,
                                                     child: CustomElevetedButton(
                                                         text: AppStrings.cancel,
-                                                        onPressed: () {}),
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        }),
                                                   ),
                                                 ],
                                               ),
@@ -132,8 +147,8 @@ class HomeScreen extends StatelessWidget {
         //fba
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (_) => const AddTaskScreen()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const AddTaskScreen()));
           },
           backgroundColor: AppColors.primary,
           child: const Icon(Icons.add),
@@ -218,7 +233,7 @@ class TaskComponents extends StatelessWidget {
               RotatedBox(
                 quarterTurns: 3,
                 child: Text(
-                    taskModel.isCompleted
+                    taskModel.isCompleted == 1
                         ? AppStrings.taskCompleted
                         : AppStrings.toDo,
                     style: Theme.of(context).textTheme.displayMedium),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:to_do_app/core/commons/common.dart';
 import 'package:to_do_app/core/utils/app_colors.dart';
 import 'package:to_do_app/core/utils/app_strings.dart';
 import 'package:to_do_app/core/widgets/custom_eleveted_button.dart';
@@ -35,7 +36,9 @@ class AddTaskScreen extends StatelessWidget {
             padding: const EdgeInsets.all(24),
             child: BlocConsumer<TaskCubit, TaskState>(
               listener: (context, state) {
+                
                 if (state is InsertTaskSuccessState) {
+                  showTwist(messege: 'Added Successfuly', state: ToastStates.success);
                   Navigator.pop(context);
                 }
               },
@@ -194,7 +197,7 @@ class AddTaskScreen extends StatelessWidget {
                         height: 90.h,
                       ),
                       //! add task button
-                      //  Spacer(),
+                      //  Spacer(),,
                       state is InsertTaskLoadingState
                           ? const Center(
                               child: CircularProgressIndicator(

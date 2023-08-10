@@ -5,13 +5,15 @@ import 'package:to_do_app/core/services/service_locator.dart';
 import 'package:to_do_app/features/task/presentation/cubit/task_cubit.dart';
 
 import 'app/app.dart';
+import 'core/database/sqflite_helper/sqflite.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   setup();
   await serviceLocatir<CacheHelper>().init();
+  serviceLocatir<SqfliteHelper>().initDB();
   runApp( BlocProvider(
-    create: (context) => TaskCubit(),
+    create: (context) => TaskCubit()..getTasks(),
     child: const MyApp(),
   ));
 }

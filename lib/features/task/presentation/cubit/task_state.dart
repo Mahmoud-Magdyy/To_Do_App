@@ -18,3 +18,10 @@ final class InsertTaskLoadingState extends TaskState {}
 final class InsertTaskSuccessState extends TaskState {}
 final class InsertTaskErrorState extends TaskState {}
 
+final class GetTaskLoadingState extends TaskState {}
+final class GetTaskSuccessState extends TaskState {}
+final class GetTaskErrorState extends TaskState {}
+
+final class UpdateTaskLoadingState extends TaskState {}
+final class UpdateTaskSuccessState extends TaskState {}
+final class UpdateTaskErrorState extends TaskState {}
