@@ -11,6 +11,10 @@ final class GetStartDateLoading extends TaskState {}
 final class GetEndDateLoading extends TaskState {}
 final class GetEndDateSuccess extends TaskState {}
 final class GetEndDateError extends TaskState {}
+final class GetSelectedDateLoadigState extends TaskState {}
+final class GetSelectedDateSuccessState extends TaskState {}
+
+
 final class ChangeCheckMarkIndexState extends TaskState {}
 final class GetColorState extends TaskState {}
 
@@ -25,3 +29,7 @@ final class GetTaskErrorState extends TaskState {}
 final class UpdateTaskLoadingState extends TaskState {}
 final class UpdateTaskSuccessState extends TaskState {}
 final class UpdateTaskErrorState extends TaskState {}
+
+final class DeleteTaskLoadingState extends TaskState {}
+final class DeleteTaskSuccessState extends TaskState {}
+final class DeleteTaskErrorState extends TaskState {}

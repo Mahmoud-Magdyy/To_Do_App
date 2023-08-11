@@ -60,6 +60,6 @@ class SqfliteHelper {
 
   //! delete
   Future<int> deleteFromDB(int id) async {
-    return await db.rawDelete('DELETE FROM Tasks WHERE name = ?', [id]);
+    return await db.rawDelete('DELETE FROM Tasks WHERE id = ?', [id]);
   }
 }

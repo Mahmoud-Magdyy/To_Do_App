@@ -11,6 +11,7 @@ import '../../data/mode/task_model.dart';
 class TaskCubit extends Cubit<TaskState> {
   TaskCubit() : super(TaskInitial());
   DateTime currentDate = DateTime.now();
+  DateTime selectedDate = DateTime.now();
   String startTime = DateFormat('hh:mm a').format(DateTime.now());
 
   String endTime = DateFormat('hh:mm a')
@@ -95,15 +96,21 @@ class TaskCubit extends Cubit<TaskState> {
     currentIndex = index;
   }
 
+  void getSelectedDate(date) {
+    emit(GetSelectedDateLoadigState());
+    selectedDate = date;
+    emit(GetSelectedDateSuccessState());
+    getTasks();
+  }
+
   List<TaskModel> tasksList = [];
 
   void insetTask() async {
     emit(InsertTaskLoadingState());
 
     try {
-      await   serviceLocatir<SqfliteHelper>().inserrToDB(
+      await serviceLocatir<SqfliteHelper>().inserrToDB(
         TaskModel(
-            
             date: DateFormat.yMd().format(currentDate),
             color: currentIndex,
             title: titleController.text,
@@ -137,26 +144,42 @@ class TaskCubit extends Cubit<TaskState> {
   }
 
 //! get task
-  void getTasks()async{
+  void getTasks() async {
     emit(GetTaskLoadingState());
-   await serviceLocatir<SqfliteHelper>().getFromDB().then((value){
-    tasksList=value.map((e) => TaskModel.fromJson(e)).toList();
-    emit(GetTaskSuccessState());
-   }).catchError((e){
-    print(e.toString());
-    emit(GetTaskErrorState());
-   });
+    await serviceLocatir<SqfliteHelper>().getFromDB().then((value) {
+      tasksList = value
+          .map((e) => TaskModel.fromJson(e))
+          .toList()
+          .where(
+              (element) => element.date == DateFormat.yMd().format(selectedDate))
+          .toList();
+      emit(GetTaskSuccessState());
+    }).catchError((e) {
+      print(e.toString());
+      emit(GetTaskErrorState());
+    });
   }
 
 //! update
-  void updateTask(id)async{
+  void updateTask(id) async {
     emit(UpdateTaskLoadingState());
-    await serviceLocatir<SqfliteHelper>().updateDB(id).then((value)  {
+    await serviceLocatir<SqfliteHelper>().updateDB(id).then((value) {
       emit(UpdateTaskSuccessState());
       getTasks();
-    }).catchError((e){
+    }).catchError((e) {
       print(e.toString());
       emit(UpdateTaskErrorState());
+    });
+  }
+
+  void deleteTask(id) async {
+    emit(DeleteTaskLoadingState());
+    await serviceLocatir<SqfliteHelper>().deleteFromDB(id).then((value) {
+      emit(DeleteTaskSuccessState());
+      getTasks();
+    }).catchError((e) {
+      print(e.toString());
+      emit(DeleteTaskErrorState());
     });
   }
 }
