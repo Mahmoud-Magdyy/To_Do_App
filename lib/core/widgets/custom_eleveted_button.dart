@@ -26,6 +26,7 @@ class CustomElevetedButton extends StatelessWidget {
             color: AppColors.white,
             fontWeight: FontWeight.w400,
             fontSize: 16.sp,
+            
           ),
         ));
   }

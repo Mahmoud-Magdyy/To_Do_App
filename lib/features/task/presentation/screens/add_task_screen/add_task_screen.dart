@@ -50,6 +50,7 @@ class AddTaskScreen extends StatelessWidget {
                     children: [
                       //! title
                       AddTaskComponent(
+                        maxLength: 15,
                         title: AppStrings.title,
                         hintText: AppStrings.titleHint,
                         controller:
@@ -63,7 +64,7 @@ class AddTaskScreen extends StatelessWidget {
                       ),
 
                       SizedBox(
-                        height: 24.h,
+                        height: 4.h,
                       ),
                       //! note
                       AddTaskComponent(
@@ -213,6 +214,8 @@ class AddTaskScreen extends StatelessWidget {
                                         .formKey
                                         .currentState!
                                         .validate()) {
+                                          // print( BlocProvider.of<TaskCubit>(context)
+                                          // .currentIndex);
                                       BlocProvider.of<TaskCubit>(context)
                                           .insetTask();
                                     }

@@ -15,5 +15,5 @@ void main() async {
   runApp( BlocProvider(
     create: (context) => TaskCubit()..getTasks(),
     child: const MyApp(),
-  ));
+  ),);
 }

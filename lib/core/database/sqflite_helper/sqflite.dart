@@ -45,9 +45,9 @@ class SqfliteHelper {
   Future<int> inserrToDB(TaskModel model) async {
     print('insert loading');
     return await db.rawInsert('''
-        INSERT INTO Tasks(title,note,date,startTime,endTime,Color,isCompleted)VALUES
+        INSERT INTO Tasks(title,note,date,startTime,endTime,color,isCompleted)VALUES
         ('${model.title}','${model.note}','${model.date}','${model.startTime}',
-        '${model.endTime}','${model.isCompleted}','${model.color}')
+        '${model.endTime}','${model.color}','${model.isCompleted}')
       ''');
       
   }

@@ -37,6 +37,7 @@ class HomeScreen extends StatelessWidget {
                     AppStrings.toDay,
                     style: Theme.of(context).textTheme.displayLarge,
                   ),
+                  const SizedBox(height: 8,),
 
                   //date picker
                   DatePicker(
@@ -168,17 +169,37 @@ class HomeScreen extends StatelessWidget {
   }
 }
 
+
 class TaskComponents extends StatelessWidget {
   const TaskComponents({
     super.key,
     required this.taskModel,
   });
   final TaskModel taskModel;
-
+  
+Color getColor(index) {
+    switch (index) {
+      case 0:
+        return AppColors.red;
+      case 1:
+        return AppColors.green;
+      case 2:
+        return AppColors.blueGrye;
+      case 3:
+        return AppColors.blue;
+      case 4:
+        return AppColors.orange;
+      case 5:
+        return AppColors.purple;
+      default:
+        return AppColors.grey;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TaskCubit, TaskState>(
       builder: (context, state) {
+        // print(taskModel.color);
         return Container(
           width: 327,
           height: 132,
@@ -187,7 +208,8 @@ class TaskComponents extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             color:
-                BlocProvider.of<TaskCubit>(context).getColor(taskModel.color),
+                getColor(taskModel.color)
+                // Colors.black
           ),
           child: Row(
             children: [
@@ -199,6 +221,7 @@ class TaskComponents extends StatelessWidget {
                   Text(
                     taskModel.title,
                     style: Theme.of(context).textTheme.displayLarge,
+                    
                   ),
                   const SizedBox(
                     height: 8,
@@ -222,10 +245,16 @@ class TaskComponents extends StatelessWidget {
                   const SizedBox(
                     height: 8,
                   ),
-                  //text
-                  Text(
-                    taskModel.note,
-                    style: Theme.of(context).textTheme.displayLarge,
+                  //note
+                  SizedBox(
+                    width: 250,
+                    
+                    child: Text(
+                      taskModel.note,
+                      style: Theme.of(context).textTheme.displayLarge,
+                      maxLines: 1,
+                      overflow:  TextOverflow.ellipsis,
+                    ),
                   ),
                 ],
               ),
@@ -247,7 +276,8 @@ class TaskComponents extends StatelessWidget {
                         ? AppStrings.taskCompleted
                         : AppStrings.toDo,
                     style: Theme.of(context).textTheme.displayMedium),
-              )
+              ),
+             
             ],
           ),
         );

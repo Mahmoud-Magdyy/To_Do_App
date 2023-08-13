@@ -90,10 +90,13 @@ class TaskCubit extends Cubit<TaskState> {
         return AppColors.grey;
     }
   }
+  
 
   void changeCheckMarkIndex(index) {
-    emit(ChangeCheckMarkIndexState());
+ 
     currentIndex = index;
+    print(currentIndex);
+       emit(ChangeCheckMarkIndexState());
   }
 
   void getSelectedDate(date) {
@@ -109,6 +112,8 @@ class TaskCubit extends Cubit<TaskState> {
     emit(InsertTaskLoadingState());
 
     try {
+      //  await Future.delayed(const Duration(seconds:1));
+      print(currentIndex);
       await serviceLocatir<SqfliteHelper>().inserrToDB(
         TaskModel(
             date: DateFormat.yMd().format(currentDate),
@@ -137,6 +142,7 @@ class TaskCubit extends Cubit<TaskState> {
       //   );
       titleController.clear();
       noteController.clear();
+      
       emit(InsertTaskSuccessState());
     } catch (e) {
       emit(InsertTaskErrorState());
@@ -153,6 +159,7 @@ class TaskCubit extends Cubit<TaskState> {
           .where(
               (element) => element.date == DateFormat.yMd().format(selectedDate))
           .toList();
+          print(value);
       emit(GetTaskSuccessState());
     }).catchError((e) {
       print(e.toString());
